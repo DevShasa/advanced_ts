@@ -1,14 +1,17 @@
+import { Note, NoteData, Tag } from './App'
 import NoteForm from './NoteForm'
 
-type Props = {}
+type Props = {
+  onSubmit: (data:NoteData) => void,
+  onAddTag: (tag:Tag) => void
+  availableTags: Tag[]
+}
 
 const NewNote = (props: Props) => {
+  const { onSubmit, onAddTag, availableTags } = props
   return (
     <>
-        <h1 className='mb-4'>
-            New note
-        </h1>
-        <NoteForm />
+        <NoteForm onSubmit={onSubmit} onAddTag={onAddTag} availableTags={availableTags}/>
     </>
   )
 }
