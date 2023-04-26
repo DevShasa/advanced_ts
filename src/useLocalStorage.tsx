@@ -8,7 +8,7 @@ export function useLocalStorage<T>(key:string, initialValue: T |(()=>T)){
             if(typeof initialValue ==="function"){
                 // can accept a function that returns type T kind of like setState
                 // if it is a function ... execute!
-                return (initialValue as ()=>T)()
+                return (initialValue as ()=>T)() //iife!
             }else{
                 return initialValue
             }

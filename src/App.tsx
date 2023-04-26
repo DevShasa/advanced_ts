@@ -6,6 +6,8 @@ import { useMemo, useState } from "react"
 import { useLocalStorage } from "./useLocalStorage"
 import {v4 as uuidV4} from "uuid"
 import NoteList from "./NoteList"
+import { NoteLayout } from "./NoteLayout"
+import ShowNote from "./ShowNote"
 
 export type Note = {
   id:string
@@ -66,6 +68,10 @@ function App() {
       })
   }
 
+  function onDeleteNote(id:string){
+    setNotes(prevNotes => prevNotes.filter(note=> note.id !== id))
+  }
+
   function addTag(tag:Tag){
     setTags(prev => [...prev, tag])
 
@@ -76,8 +82,8 @@ function App() {
       <Routes>
         <Route path="/" element={<NoteList availableTags={tags} notes={notesWithTags}/>} />
         <Route path="/new" element={<NewNote onSubmit={onCreateNote} onAddTag={addTag} availableTags={tags}/>} />
-        <Route path="/:id">
-            <Route index element={<h1>Show</h1>} />
+        <Route path="/:id" element={<NoteLayout notes={notesWithTags}/>}>
+            <Route index element={<ShowNote onDelete={onDeleteNote}/>} />
             <Route path="edit" element={<h1>edit</h1>} />
         </Route>
         <Route path="/new" element={<h1>new</h1>} />
