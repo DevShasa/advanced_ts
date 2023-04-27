@@ -4,10 +4,13 @@ import { Link } from 'react-router-dom'
 import ReactSelect from "react-select"
 import { Note, Tag } from './App'
 import NoteCard from './components/NoteCard'
+import EditTagsModal from './components/EditTagsModal'
 
 type Props = {
     availableTags: Tag[]
     notes: Note[]
+    onDeleteTag:(id:string) => void
+    onUpdateTag:(id:string, label:string)=>void
 }
 
 const NoteList = (props: Props) => {
@@ -15,6 +18,7 @@ const NoteList = (props: Props) => {
     const { availableTags, notes } = props
     const [ selectedTags, setSelectedTags ] = useState<Tag[]>([])
     const [ title, setTitle ] = useState<string>("")
+    const [editTagsModalIsOpen, setEditTagsModalIsOpen] = useState(false)
 
     const filteredNotes = useMemo(()=>{
         return notes.filter(note =>{
@@ -90,6 +94,14 @@ const NoteList = (props: Props) => {
                     )
                 })}
             </Row>
+
+            <EditTagsModal 
+                show={editTagsModalIsOpen}
+                handleClose={()=>setEditTagsModalIsOpen(false)}
+                availableTags={availableTags}
+                onDeleteTag={props.onDeleteTag}
+                onUpdateTag={props.onUpdateTag}
+            />
         </>
     )
 }
