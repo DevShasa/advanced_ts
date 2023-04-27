@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 
 export function useLocalStorage<T>(key:string, initialValue: T |(()=>T)){
     const [value, setValue] =  useState<T>(()=>{
+        // determine the initial value 
         const jsonValue = localStorage.getItem(key)
         if(jsonValue === null){
             // There is no value in localstorage

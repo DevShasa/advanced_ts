@@ -10,16 +10,22 @@ interface Props{
     onSubmit:(data:NoteData) =>void
     onAddTag:(tag:Tag) => void
     availableTags: Tag[]
+
+    title?:string
+    markdown?:string
+    tags?:Tag[]
+
+    edit?:boolean
 }
 
 const NoteForm = (props:Props) => {
 
-  const navigate = useNavigate()  
-  const { onSubmit, onAddTag, availableTags } = props
+  const { onSubmit, onAddTag, availableTags, title="", markdown="", tags=[], edit } = props
 
   const titleRef  = useRef<HTMLInputElement>(null)
   const markDownRef  = useRef<HTMLTextAreaElement>(null)
-  const [ selectedTags, setSelectedTags ] = useState<Tag[]>([])
+  const [ selectedTags, setSelectedTags ] = useState<Tag[]>(tags)
+  const navigate = useNavigate()  
 
   function handleSubmit(e:FormEvent){
     e.preventDefault()
@@ -37,14 +43,14 @@ const NoteForm = (props:Props) => {
   return (
     <Form  style={{maxWidth:"1000px", marginInline:"auto"}} onSubmit={handleSubmit}>
         <h1 className='mb-4'>
-            New note
+            {edit ? "Edit Note" :"New Note"}
         </h1>
         <Stack gap={4}>
             <Row>
                 <Col>
                     <Form.Group controlId="title">
                         <Form.Label>Title</Form.Label>
-                        <Form.Control required ref={titleRef}/>
+                        <Form.Control required ref={titleRef} defaultValue={title}/>
                     </Form.Group>
                 </Col>
                 <Col>
@@ -89,7 +95,7 @@ const NoteForm = (props:Props) => {
             </Row>
             <Form.Group controlId="markdown">
                 <Form.Label>Body</Form.Label>
-                <Form.Control required as="textarea" rows={15} ref={markDownRef}/>
+                <Form.Control required as="textarea" rows={15} ref={markDownRef} defaultValue={markdown}/>
             </Form.Group>
             <Stack direction="horizontal" gap={2} className="justify-content-end">
                 <Button type="submit" variant="primary">Save</Button>
