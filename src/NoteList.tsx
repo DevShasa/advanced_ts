@@ -34,9 +34,16 @@ const NoteList = (props: Props) => {
                 <Col xs="auto">
                     <Stack gap={2} direction="horizontal">
                         <Link to="/new">
-                            <Button variant='primary'>Create</Button>
+                            <Button variant='primary'>
+                                Create
+                            </Button>
                         </Link>
-                        <Button variant="outline-secondary">Edit Tags</Button>
+                        <Button 
+                            variant="outline-secondary"
+                            onClick={()=>setEditTagsModalIsOpen(true)}
+                        >
+                            Edit Tags
+                        </Button>
                     </Stack>
                 </Col>
             </Row>
