@@ -63,7 +63,7 @@ function App() {
           {
             ...data,
             id: uuidV4(),
-            tagIds: tags.map(tag => tag.id) // extract ids 
+            tagIds: tags.map(tag => tag.id) // extract ids from the tag/ tags are stored without ids
           } 
         ]
       })
